@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-thumbsignin-plugin"
+    version="0.0.1">
+    <name>ThumbSignIn</name>
+    <description>ThumbSignIn Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,thumsignin</keywords>
+
+
+	
+
+	<js-module src="www/thumbsignin.js" name="thumbsignin">
+		<clobbers target="cordova.thumbsignin" />
+	</js-module>
+
+
+    <!-- android -->
+    <platform name="android">
+	<preference name="PRAMATI_FIDO_APP_ID" default="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
+	<config-file target="AndroidManifest.xml" parent="/*">
+		<uses-permission android:name="android.permission.INTERNET" />
+		<uses-permission android:name="android.permission.USE_FINGERPRINT" />
+		<uses-permission android:name="android.permission.CAMERA" />
+		<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	</config-file>
+	<config-file target="AndroidManifest.xml" parent="/*/application">
+		<meta-data android:name="pramati.fido.apiKey" android:value="$PRAMATI_FIDO_APP_ID" />
+	</config-file>
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="ThumbSignInService">
+		<param name="android-package" value="com.pramati.cordova.plugin.ThumbSignInPlugin" />
+	    </feature>
+        </config-file>
+	<framework src="src/android/thumbsignin.gradle" custom="true" type="gradleReference"/>
+	<lib-file src="src/android/libs/thumbsignin-fido-sdk-v8.aar"/>
+        <source-file src="src/android/ThumbSignInPlugin.java" target-dir="src/com/pramati/cordova/plugin" />
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Device">
+                <param name="ios-package" value="CDVDevice"/>
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/CDVDevice.h" />
+        <source-file src="src/ios/CDVDevice.m" />
+    </platform>
+</plugin>

@@ -1,0 +1,32 @@
+{
+  "name": "cordova-thumbsignin-plugin",
+  "version": "1.0.0",
+  "description": "ThumbsignIn Cordova Plugin",
+  "types": "",
+  "cordova": {
+    "id": "cordova-thumbsignin-plugin",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "keywords": [],
+  "scripts": {},
+  "author": "Apache Software Foundation",
+  "license": "Apache-2.0",
+  "engines": {
+    "cordovaDependencies": {
+      "3.0.0": {
+        "cordova": ">100"
+      }
+    }
+  },
+  "devDependencies": {}
+}
