@@ -66,7 +66,7 @@ public class ThumbSignInPlugin extends CordovaPlugin {
         if ("register".equals(action)) {
             ThumbSignIn.register("user1", getCallback(callbackContext));
         } if ("login".equals(action)) {
-            ThumbSignIn.authenticate("user1", getCallback(callbackContext));
+            ThumbSignIn.authenticate(getCallback(callbackContext));
         } else {
             return false;
         }
