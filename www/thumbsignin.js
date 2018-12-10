@@ -34,6 +34,18 @@ function ThumbSignIn () {
 
 }
 
+
+
+function callback(fn) {
+    return function(str) {
+	try {
+        	fn && fn(JSON.parse(str));
+        } catch(e) {
+        	fn && fn(str);
+        }
+    };
+}
+
 /**
  * Get device info
  *
@@ -41,13 +53,18 @@ function ThumbSignIn () {
  * @param {Function} errorCallback The function to call when there is an error getting the heading data. (OPTIONAL)
  */
 ThumbSignIn.prototype.register = function (userId, successCallback, errorCallback) {
-    exec(successCallback, errorCallback, 'ThumbSignInService', 'register', [userId]);
+    exec(callback(successCallback), callback(errorCallback), 'ThumbSignInService', 'register', [userId + ""]);
 };
 
 
 ThumbSignIn.prototype.login = function (successCallback, errorCallback) {
-    exec(successCallback, errorCallback, 'ThumbSignInService', 'login', [options]);
+    exec(callback(successCallback), callback(errorCallback), 'ThumbSignInService', 'login', []);
 };
+
+ThumbSignIn.prototype.deregister = function (successCallback, errorCallback) {
+    exec(callback(successCallback), callback(errorCallback), 'ThumbSignInService', 'deregister', []);
+};
+
 
 module.exports = new ThumbSignIn();
 

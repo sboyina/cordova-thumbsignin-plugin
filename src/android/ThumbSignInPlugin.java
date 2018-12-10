@@ -37,7 +37,7 @@ public class ThumbSignInPlugin extends CordovaPlugin {
         return new ThumbSignIn.Callback() {
             @Override
             public void onSuccess(TSResponse tsResponse) {
-                callbackContext.success(tsResponse.toJson());
+                callbackContext.success(tsResponse == null ? "" : tsResponse.toJson());
             }
 
             @Override
@@ -64,15 +64,18 @@ public class ThumbSignInPlugin extends CordovaPlugin {
             THUMB_SIGN_IN_INITIALIZED = true;
         }
         if ("register".equals(action)) {
-            ThumbSignIn.register("user1", getCallback(callbackContext));
-        } if ("login".equals(action)) {
+            ThumbSignIn.register(args.getString(0), getCallback(callbackContext));
+        } else if ("login".equals(action)) {
             ThumbSignIn.authenticate(getCallback(callbackContext));
+        } else if ("deregister".equals(action)) {
+            ThumbSignIn.dereg(getCallback(callbackContext));
         } else {
             return false;
         }
         return true;
     }
 }
+
 
 
 
