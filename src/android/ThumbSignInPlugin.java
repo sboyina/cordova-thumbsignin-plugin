@@ -18,6 +18,9 @@
 */
 package com.pramati.cordova.plugin;
 
+import android.content.Context;
+import android.os.Build;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.util.Log;
 
 import com.pramati.thumbsignin.ThumbSignIn;
@@ -63,7 +66,9 @@ public class ThumbSignInPlugin extends CordovaPlugin {
             ThumbSignIn.init(this.cordova.getContext());
             THUMB_SIGN_IN_INITIALIZED = true;
         }
-        if ("register".equals(action)) {
+        if ("isAvailable".equals(action)) {
+            callbackContext.success(isAvailable(this.cordova.getContext()));
+        } else if ("register".equals(action)) {
             ThumbSignIn.register(args.getString(0), getCallback(callbackContext));
         } else if ("login".equals(action)) {
             ThumbSignIn.authenticate(getCallback(callbackContext));
@@ -74,7 +79,16 @@ public class ThumbSignInPlugin extends CordovaPlugin {
         }
         return true;
     }
+
+    private JSONObject isAvailable(Context context) throws JSONException {
+        boolean isAvailable =  (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                && FingerprintManagerCompat.from(context).isHardwareDetected();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("available", isAvailable);
+        return jsonObject;
+    }
 }
+
 
 
 
